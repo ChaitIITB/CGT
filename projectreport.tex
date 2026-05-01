@@ -1,0 +1,230 @@
+\documentclass[10pt,twocolumn]{article}
+\usepackage[margin=1.6cm,top=1.8cm,bottom=1.8cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+% ---------- colours ----------
+\definecolor{lblue}{RGB}{55,138,221}
+\definecolor{rred}{RGB}{226,75,74}
+
+% ---------- layout ----------
+\titleformat{\section}{\normalfont\bfseries\small}{}{0em}{}
+\titlespacing{\section}{0pt}{5pt}{2pt}
+\setlength{\columnsep}{14pt}
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{8pt}
+
+% ---------- theorem environments ----------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ---------- macros ----------
+\newcommand{\Lopt}[1]{{\color{lblue}#1}}
+\newcommand{\Ropt}[1]{{\color{rred}#1}}
+\newcommand{\val}[1]{\mathcal{G}(#1)}
+\newcommand{\temp}[1]{t(#1)}
+\newcommand{\mean}[1]{m(#1)}
+\newcommand{\edgeL}{\overset{\Lopt{L}}{\longrightarrow}}
+\newcommand{\edgeR}{\overset{\Ropt{R}}{\longrightarrow}}
+
+% ---------- manual title block ----------
+\newcommand{\papertitle}{%
+  \begingroup
+  \centering
+  {\large\bfseries Partisan Tree Ascent: Edge-Labelled Games
+    and Their Combinatorial Game Values}\par
+  \vspace{4pt}
+  {\small A.\ Researcher\,$^\dagger$\quad B.\ Co-author\,$^\dagger$\quad
+    \textit{$^\dagger$ Department of Mathematics}}\par
+  \vspace{6pt}
+  \endgroup
+}
+
+\begin{document}
+
+\twocolumn[{%
+  \papertitle
+  \noindent\small\itshape
+  We define \emph{Partisan Tree Ascent}, a two-player perfect-information
+  game played on finite rooted binary trees whose edges carry labels
+  $\Lopt{L}$ or $\Ropt{R}$.  Left (resp.\ Right) moves the shared token
+  along any adjacent $\Lopt{L}$-edge (resp.\ $\Ropt{R}$-edge), always away
+  from the root; the player unable to move loses (normal play convention).
+  We compute the CGT values of representative trees under four
+  edge-labelling regimes, prove a monotonicity theorem for pure-colour
+  paths, and derive a temperature formula that exactly determines
+  first-move urgency in compound positions.
+  \par\vspace{6pt}
+}]
+
+% ============================================================
+\section{1.\enspace Game definition}
+% ============================================================
+
+\begin{definition}
+A \emph{Partisan Tree Ascent position} is a pair $(T,v)$ where $T$ is a
+finite rooted binary tree with each edge labelled $\Lopt{L}$ or $\Ropt{R}$,
+and $v\in V(T)$ is the current token location.
+\textbf{Left} moves $v$ to any child reachable via an $\Lopt{L}$-edge;
+\textbf{Right} moves via any $\Ropt{R}$-edge.
+The player without a legal move \textbf{loses}.
+\end{definition}
+
+The recursive CGT value at node $v$ is
+\[
+  \val{v} =
+  \bigl\{\val{c}\mid c\in\Lopt{\mathcal{L}}(v)
+  \;\big|\;
+  \val{c}\mid c\in\Ropt{\mathcal{R}}(v)\bigr\},
+\]
+with $\val{\ell}=\{|\}=0$ at every leaf $\ell$.
+
+% ============================================================
+\section{2.\enspace Values by edge-labelling type}
+% ============================================================
+
+Table~\ref{tab:values} catalogues values for representative paths and
+branching nodes.
+
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{CGT values of selected positions. Temperature $t=-\infty$
+  denotes a number (cold game).}
+\label{tab:values}
+\vspace{2pt}
+\begin{tabular}{@{}llcc@{}}
+\toprule
+Position & Type & $G$ & $t(G)$ \\
+\midrule
+$\Lopt{L}^1$                 & I   & $1$             & $-\infty$ \\
+$\Ropt{R}^1$                 & I   & $-1$            & $-\infty$ \\
+$\Lopt{L}^2$                 & I   & $2$             & $-\infty$ \\
+$\Lopt{L}\Ropt{R}$           & II  & $0$             & $-\infty$ \\
+$\Lopt{L}\Ropt{R}\Lopt{L}$   & II  & $1$             & $-\infty$ \\
+$\{0\mid 0\}$                & III & $*$             & $0$       \\
+$\{0\mid 1\}$                & III & $\tfrac{1}{2}$  & $-\infty$ \\
+$\{1\mid{-1}\}$              & III & $\pm 1$         & $1$       \\
+$\{2\mid{-2}\}$              & III & $\pm 2$         & $2$       \\
+$\{0\mid *\}$                & IV  & $\uparrow$      & $0$       \\
+$\{*\mid 0\}$                & IV  & $\downarrow$    & $0$       \\
+$\{\uparrow\mid *\}$         & IV  & $\Uparrow$      & $0$       \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+\section{3.\enspace A monotonicity theorem}
+% ============================================================
+
+\begin{theorem}[Monochromatic path values]\label{thm:mono}
+Let $P^n_L$ denote the path $v_0\edgeL v_1\edgeL\cdots\edgeL v_n$ rooted
+at $v_0$.  Then $\val{P^n_L}=n$ for all $n\ge 0$.
+Symmetrically, $\val{P^n_R}=-n$.
+\end{theorem}
+
+\begin{proof}
+By induction on $n$.  Base: $\val{P^0_L}=\{|\}=0$.
+Inductive step: Left's unique option from $v_0$ leads to the tail
+$P^{n-1}_L$ with value $n-1$ by hypothesis; Right has no options.
+Hence $\val{P^n_L}=\{n-1\mid\,\}$.
+By the \emph{simplicity rule}, $\{n-1\mid\,\}=n$, since $n$ is the
+simplest number strictly greater than $n-1$ with no Right upper bound.
+\end{proof}
+
+\begin{corollary}\label{cor:outcome}
+$P^n_L$ is a Left win unconditionally for all $n\ge 1$,
+regardless of who moves first.
+\end{corollary}
+
+\begin{proof}
+For $n\ge 1$, $\val{P^n_L}=n>0$, so Left wins under optimal play.
+Since Right cannot move at all, the outcome class is $\mathcal{L}$
+irrespective of turn order---a stronger claim than ``first-player wins.''
+\end{proof}
+
+\begin{remark}
+Purely monochromatic positions contribute only a constant integer to
+$\val{G_1+\cdots+G_k}$ and offer no strategic choice.  All
+game-theoretic content lies in branching and mixed-colour types.
+\end{remark}
+
+% ============================================================
+\section{4.\enspace Temperature and urgency}
+% ============================================================
+
+For a game $G=\{G^L\mid G^R\}$ with $G^L < G^R$, the \emph{temperature}
+and \emph{mean value} satisfy
+\[
+  \temp{G} = \frac{\mean{G^L}-\mean{G^R}}{2}, \qquad
+  \mean{G} = \frac{\mean{G^L}+\mean{G^R}}{2}.
+\]
+In any compound position $\sum_i G_i$, optimal play moves first in the
+component with the \emph{largest} temperature.
+
+\begin{proposition}\label{prop:temp}
+For the symmetric switch $\pm n = \{n\mid{-n}\}$, we have
+$\temp{\pm n} = n$ and $\mean{\pm n}=0$.
+The temperature of a Type-III symmetric branch equals the depth
+of its branches.
+\end{proposition}
+
+\noindent\textbf{Strategic consequence.}
+In the compound game $(\pm 2)+(\pm 1)+{*}$, optimal play demands
+moving in $\pm 2$ first (hottest, $t=2$), then $\pm 1$ ($t=1$),
+treating $*$ last ($t=0$).
+Deviating---e.g., playing in $*$ first---grants the opponent a swing of
+$2t(\pm 2)=4$ half-moves, which is typically game-deciding.
+
+% ============================================================
+\section{5.\enspace Incomparability and the infinitesimal zoo}
+% ============================================================
+
+Type-IV positions expose the most striking feature of CGT: the game
+order is a \emph{partial} order, not a total one.
+
+\begin{theorem}[Incomparability of $\uparrow$ and $*$]\label{thm:incomp}
+$\uparrow\parallel *$, i.e.\ $\uparrow$ and $*$ are incomparable under
+the standard CGT ordering.
+\end{theorem}
+
+\begin{proof}[Sketch]
+Compute $\uparrow - * = \uparrow + * = \{0\mid *\}+*=\{**\mid *\}$.
+If Left moves first she plays to $**=0$, winning; if Right moves first
+he plays to $*$, leaving $*+*=0$, winning.  Thus $\uparrow+*$ is
+\emph{fuzzy} (outcome class $\mathcal{N}$), so $\uparrow\neq *$.
+Since $\uparrow>0$ yet $*\parallel 0$, neither $\uparrow>*$ nor
+$\uparrow<*$ can hold.
+\end{proof}
+
+This means that in positions containing both $\uparrow$ and $*$ summands,
+temperature-based heuristics fail entirely: no real-valued urgency ranking
+resolves the play correctly, and the full surreal-game machinery is
+required.
+
+% ============================================================
+\section{6.\enspace Open problems}
+% ============================================================
+
+\begin{enumerate}[leftmargin=*,topsep=2pt,itemsep=1pt,label=(\roman*)]
+\item \textbf{Complexity.} Is determining the outcome class of a
+  Partisan Tree Ascent position in $\mathbf{P}$ or $\mathbf{PSPACE}$-hard?
+\item \textbf{Realizability.} Characterise which CGT values arise as
+  $\val{v}$ for some edge-labelled binary tree.
+\item \textbf{Generalisation.} Replace binary trees with $k$-ary trees
+  and $k$ player-colour edge labels.  Do temperature strategies remain
+  optimal, or does the richer structure force new phenomena?
+\end{enumerate}
+
+\end{document}

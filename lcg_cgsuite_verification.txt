@@ -1,0 +1,79 @@
+// LEAF CONVERGENCE GAMES: CGSuite Verification Script
+// Copy-paste each G := ... line into CGSuite to verify
+
+// DEPTH 1 POSITIONS
+// ============================================================
+
+// Symmetric positions
+G_sym_1 := {0 | 0};
+CanonicalForm(G_sym_1);          // Expected: *
+Temperature(G_sym_1);             // Expected: 0
+
+G_sym_2 := {0,0 | 0,0};
+CanonicalForm(G_sym_2);           // Expected: ±1
+Temperature(G_sym_2);             // Expected: 1
+
+G_sym_3 := {0,0,0 | 0,0,0};
+CanonicalForm(G_sym_3);           // Expected: ±2
+Temperature(G_sym_3);             // Expected: 2
+
+// Asymmetric - Left advantage
+G_left_1 := {0};
+CanonicalForm(G_left_1);          // Expected: 1
+
+G_left_2 := {0,0};
+CanonicalForm(G_left_2);          // Expected: 2
+
+G_left_3 := {0,0,0};
+CanonicalForm(G_left_3);          // Expected: 3
+
+// Asymmetric - Right advantage
+G_right_1 := { | 0};
+CanonicalForm(G_right_1);         // Expected: -1
+
+G_right_2 := { | 0,0};
+CanonicalForm(G_right_2);         // Expected: -2
+
+// Mixed asymmetry (Left > Right)
+G_3L_1R := {0,0,0 | 0};
+CanonicalForm(G_3L_1R);           // Expected: ±1
+Temperature(G_3L_1R);             // Expected: 1
+
+G_4L_1R := {0,0,0,0 | 0};
+CanonicalForm(G_4L_1R);           // Expected: ±1
+Temperature(G_4L_1R);             // Expected: 1
+
+G_5L_1R := {0,0,0,0,0 | 0};
+CanonicalForm(G_5L_1R);           // Expected: ±1
+Temperature(G_5L_1R);             // Expected: 1
+
+// DEPTH 2 POSITIONS
+// ============================================================
+
+// Infinitesimals: {0 | *}
+G_up := {0 | {0|0}};
+CanonicalForm(G_up);              // Expected: up
+Temperature(G_up);                // Expected: 0
+
+// Infinitesimals: {* | 0}
+G_down := {{0|0} | 0};
+CanonicalForm(G_down);            // Expected: down
+Temperature(G_down);              // Expected: 0
+
+// Compound: {0 | up}
+G_up_2 := {0 | {0 | {0|0}}};
+CanonicalForm(G_up_2);            // Expected: compound
+
+// Compound game
+G_compound_1 := {0,0,0 | 0} + {0|0};
+Temperature(G_compound_1);
+
+// Temperature analysis
+G_temp_1 := {0,0 | 0,0};
+Temperature(G_temp_1);            // 1
+
+G_temp_2 := {0,0,0,0 | 0,0};
+Temperature(G_temp_2);            // 2
+
+G_temp_3 := {0,0,0,0,0 | 0,0,0};
+Temperature(G_temp_3);            // 3

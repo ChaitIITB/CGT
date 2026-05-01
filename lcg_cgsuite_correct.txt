@@ -1,0 +1,141 @@
+// ============================================================
+// LEAF CONVERGENCE GAMES: CORRECTED CGSuite Verification
+// ============================================================
+// CRITICAL: CGSuite uses G.Method syntax, not Method(G)
+// CRITICAL: {0,0|0,0} reduces to {0|0}=* (duplicates eliminated)
+//           Use {1|-1} for ±1, {2|-2} for ±2, etc.
+
+// ============================================================
+// DEPTH 1: PROPER CONSTRUCTIONS
+// ============================================================
+
+// Zero game: {0|0} = * (fuzzy, both sides move to same value)
+G0 := {0|0};
+G0.CanonicalForm;    // * (fuzzy)
+G0.Temperature;      // 0
+
+// Positive integers: {n-1|} (Left can force move to n-1, Right cannot move)
+G_pos_1 := {0|};     // 1
+G_pos_1.CanonicalForm;
+G_pos_1.Temperature;
+
+G_pos_2 := {{0|}|};  // 2
+G_pos_2.CanonicalForm;
+G_pos_2.Temperature;
+
+// Negative integers: {|m+1} (Right can force move to m+1, Left cannot move)
+G_neg_1 := {|0};     // -1
+G_neg_1.CanonicalForm;
+G_neg_1.Temperature;
+
+G_neg_2 := {|{|0}};  // -2
+G_neg_2.CanonicalForm;
+G_neg_2.Temperature;
+
+// Switches: {n|-m} where n ≠ m (both sides have incentive to move)
+G_switch_1 := {1|-1};  // ±1 (temperature 1)
+G_switch_1.CanonicalForm;
+G_switch_1.Temperature;
+G_switch_1.AtomicWeight;
+
+G_switch_2 := {2|-2};  // ±2 (temperature 2)
+G_switch_2.CanonicalForm;
+G_switch_2.Temperature;
+G_switch_2.AtomicWeight;
+
+G_switch_3 := {1|-2};  // Not switch, Left advantage
+G_switch_3.CanonicalForm;
+G_switch_3.Temperature;
+
+// ============================================================
+// DEPTH 2: INFINITESIMALS (atomic weights)
+// ============================================================
+
+// Infinitesimal up (↑): Left prefers moving, Right indifferent at 0-temperature
+// {0|*} means: Left moves to 0, Right moves to fuzzy game
+G_up := {0|{0|0}};
+G_up.CanonicalForm;       // ↑
+G_up.Temperature;          // 0
+G_up.AtomicWeight;         // ↑
+
+// Infinitesimal down (↓): Right prefers moving, Left indifferent
+// {*|0} means: Left moves to fuzzy, Right moves to 0
+G_down := {{0|0}|0};
+G_down.CanonicalForm;      // ↓
+G_down.Temperature;         // 0
+G_down.AtomicWeight;        // ↓
+
+// Higher order: {0|↑}
+G_up2_option1 := {0|0};    // This is *
+G_up2 := {0|{0|G_up2_option1}};  // {0|{0|*}}
+G_up2.CanonicalForm;
+G_up2.Temperature;
+G_up2.AtomicWeight;
+
+// {↓|0} 
+G_down2 := {{G_down|0}|0};  // {{↓|0}|0}
+G_down2.CanonicalForm;
+G_down2.Temperature;
+G_down2.AtomicWeight;
+
+// ============================================================
+// LEAF CONVERGENCE STRUCTURE: DAG with multi-sink
+// ============================================================
+
+// Example 1: Root with two branches converging differently
+// Left branch: deeper (reaches terminal slower)
+// Right branch: shallower (reaches terminal faster)
+// This creates temperature differences
+
+G_depthdiff := {{0|}|0};   // Left can go to positive, Right to zero
+G_depthdiff.CanonicalForm;
+G_depthdiff.Temperature;
+
+// Example 2: Asymmetric multi-sink convergence
+// Multiple paths, different sink values (0 in terminal case, but structure matters)
+G_multisink := {{0,0|}|{|0}};   // Complex asymmetry
+G_multisink.CanonicalForm;
+G_multisink.Temperature;
+
+// ============================================================
+// COMPOSITE GAMES: Testing additive structure
+// ============================================================
+
+// Disjunctive sum: ±1 + *
+G_comp1 := G_switch_1 + G0;
+G_comp1.CanonicalForm;
+G_comp1.Temperature;
+G_comp1.AtomicWeight;
+
+// Disjunctive sum: ↑ + 0
+G_comp2 := G_up + {0|0};
+G_comp2.CanonicalForm;
+G_comp2.Temperature;
+G_comp2.AtomicWeight;
+
+// Disjunctive sum: ↑ + ↓
+G_comp3 := G_up + G_down;
+G_comp3.CanonicalForm;
+G_comp3.Temperature;
+G_comp3.AtomicWeight;
+
+// ============================================================
+// VERIFICATION: Check value predictions
+// ============================================================
+
+// Expected from theory:
+// - All positive integers: {0, {0,...}} gives 1,2,3,...
+// - All negative integers: {| 0, {|0,...}} gives -1,-2,-3,...
+// - Switches: {n|-m}, n≠m creates temperature
+// - Infinitesimals: ↑ and ↓ from nested structures
+
+// Compute some specific cases:
+Test1 := {3|};
+Test1.CanonicalForm;   // Should be 3
+
+Test2 := {|{|{|0}}};
+Test2.CanonicalForm;   // Should be -3
+
+Test3 := {2|-3};
+Test3.CanonicalForm;   // Mixed switch
+Test3.Temperature;
