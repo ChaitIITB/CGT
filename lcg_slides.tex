@@ -13,7 +13,6 @@
 \hypersetup{colorlinks=true,linkcolor=blue!60!black}
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{verbatim}
 \usepackage{listings}
 
 \renewcommand{\familydefault}{\sfdefault}
@@ -51,51 +50,48 @@
 }
 
 \title{Leaf Convergence Games:\\ Partizan Games on Terminating Rooted Graphs}
-\subtitle{IE619 --- Combinatorial Game Theory (2025)}
-\author{Your Name / Presenter}
+\subtitle{IE619 $|$ Combinatorial Game Theory (2025)}
+\author{Chaitanya Deshkar}
 \date{\today}
 
 \begin{document}
 
+% ==================== TITLE SLIDE ====================
 \begin{frame}
-  \maketitle
-  \begin{center}
-    \Large A new class of partizan games with guaranteed termination
-  \end{center}
+  \maketitle 
 \end{frame}
 
+% ==================== ABSTRACT ====================
 \begin{frame}{Abstract}
-  We introduce \textbf{Leaf Convergence Games (LCG)}, a partizan combinatorial game played on finite rooted graphs whose edges are labelled \Lopt{L} (blue) or \Ropt{R} (red), with the key structural constraint that \textbf{all maximal paths terminate at designated terminal nodes}.
+  We introduce \textbf{Leaf Convergence Games (LCG)}, partizan games on finite rooted DAGs where \textbf{every maximal path terminates at a designated leaf}.
+
+  \vspace{8pt}
+  Left moves on blue (\Lopt{L}) edges, Right on red (\Ropt{R}). Normal play.
 
   \vspace{10pt}
-  A token starts at the root. \Lopt{Left} moves along \Lopt{L}-edges and \Ropt{Right} along \Ropt{R}-edges. The player unable to move loses (normal play).
+  \textbf{LCG provides a clean graph-theoretic lens} on classical CGT values (numbers, switches, infinitesimals, dyadics) while guaranteeing termination without surreal numbers or loopy machinery.
+\end{frame}
+
+% ==================== WHY LCG MATTERS ====================
+\begin{frame}{Why LCG?}
+  \textbf{Standard CGT} studies abstract game values.  
+  \textbf{LCG} gives a \textbf{canonical structural model}.
+
+  \vspace{12pt}
+  \textbf{Key Contributions:}
+  \begin{itemize}
+    \item Guaranteed termination.
+    \item Values \textbf{emerge directly from graph topology}.
+    \item Bridges graph theory and CGT.
+    \item Every short partizan game has an LCG representation (Representation Theorem).
+  \end{itemize}
 
   \vspace{10pt}
-  \textbf{Key properties:}
-  \begin{itemize}
-    \item All games terminate in finite time (no cycles).
-    \item Leaf structure completely determines endgame strategy.
-    \item Rich game values: integers, switches, infinitesimals, dyadic rationals.
-  \end{itemize}
+  \centering
+  \textbf{LCG = Where CGT values meet concrete graph structure.}
 \end{frame}
 
-\begin{frame}{Introduction}
-  \textbf{Leaf Convergence Games (LCG)} are partizan games on finite rooted DAGs with the convergence property:
-  \begin{itemize}
-    \item Every maximal path from the root ends at a terminal node $\tau \in \mathcal{T}$.
-    \item Edges labelled \Lopt{L} (blue) or \Ropt{R} (red).
-    \item Token starts at root; Left moves on blue, Right on red.
-  \end{itemize}
-
-  \vspace{15pt}
-  \textbf{Why this class is interesting:}
-  \begin{itemize}
-    \item \textbf{Termination guarantee} — always finite play.
-    \item \textbf{Topology-agnostic} — linear, branched, multi-sink, arbitrary DAGs.
-    \item \textbf{Strategic depth} — rich CGT values.
-  \end{itemize}
-\end{frame}
-
+% ==================== MOTIVATING STRUCTURES ====================
 \begin{frame}{Motivating Structures}
   \begin{columns}
     \begin{column}{0.33\textwidth}
@@ -108,7 +104,7 @@
         \draw[Le] (r)--(l); \draw[Re] (r)--(r1);
         \draw[Le] (l)--(t); \draw[Re] (r1)--(t);
       \end{tikzpicture}
-      \small Linear convergence
+      \small Linear
     \end{column}
     \begin{column}{0.33\textwidth}
       \centering
@@ -145,40 +141,108 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}{Formal Framework}
-  \textbf{LCG Position:}
+% ==================== VALUE CLASSIFICATION ====================
+\begin{frame}{Value Classification in LCG}
+  \begin{theorem}[Numbers]
+    A position is a number $\iff$ every Left option $<$ every Right option.
+  \end{theorem}
+
+  \begin{theorem}[Integers]
+    Integers correspond exactly to pure directed chains (unbranched Left/Right paths).
+  \end{theorem}
+
+  \begin{theorem}[Switches]
+    A position is a switch $\iff$ $\exists$ Left option $>0$ and $\exists$ Right option $<0$.
+  \end{theorem}
+
+  \begin{theorem}[Infinitesimals]
+    Infinitesimal $\iff$ all Left options $\le 0$, all Right options $\ge 0$, but not all zero.
+  \end{theorem}
+
+  \vspace{8pt}
+  These characterisations link \textbf{graph topology} directly to classical CGT value types.
+\end{frame}
+
+% ==================== BRANCHING CLARIFICATION ====================
+\begin{frame}{Important Clarification: Branching $\neq$ Magnitude}
+  \textbf{Common misconception:} More Left edges $\implies$ bigger positive number.
+
+  \vspace{10pt}
+  \textbf{Fact:} Value depends on the \textbf{values of options}, not their count.
+
   \begin{itemize}
-    \item Finite DAG with root $r$ and terminals $\mathcal{T}$.
-    \item Edges labelled \Lopt{L} or \Ropt{R}.
-    \item Every maximal path ends at a terminal.
+    \item Duplicate identical options do not change the game value.
+    \item Branching creates choice, not raw strength.
+    \item True magnitude comes from depth and asymmetry in subtrees.
+  \end{itemize}
+
+  \vspace{10pt}
+  \centering
+  \Large Graph topology $\rightsquigarrow$ strategic options, not raw count.
+\end{frame}
+
+% ==================== HOW TO READ A GRAPH ====================
+\begin{frame}{How to Read an LCG Graph — Visual Intuition}
+  \begin{itemize}
+    \item \textbf{Long Left-only path} $\to$ large positive integer
+    \item \textbf{Long Right-only path} $\to$ large negative integer
+    \item \textbf{Balanced symmetric split} $\to$ $*$
+    \item \textbf{Slight Left advantage at depth} $\to$ positive infinitesimal ($\uparrow$)
+    \item \textbf{Competing advantages} $\to$ switch ($\pm n$)
   \end{itemize}
 
   \vspace{15pt}
-  \textbf{Value:}
+  \centering
+  \textbf{LCG makes CGT values visually readable from the graph structure.}
+\end{frame}
+
+
+\begin{frame}{Graph Structure of Numbers}
+\textbf{How numbers arise in LCG graphs}
+
+\vspace{5pt}
+
+\begin{itemize}
+  \item \textbf{Integers:} Pure chains
+  \begin{itemize}
+    \item $1 = \{0 \mid\}$ (single Left step)
+    \item $2 = \{1 \mid\}$ (two-step chain)
+  \end{itemize}
+
+  \vspace{5pt}
+
+  \item \textbf{Fractions:} Ordered splits
+  \begin{itemize}
+    \item $\frac{1}{2} = \{0 \mid 1\}$
+    \item $\frac{3}{2} = \{1 \mid 2\}$
+  \end{itemize}
+
+  \vspace{5pt}
+
+  \item \textbf{Key Rule:}
+  \begin{itemize}
+    \item Left subtree gives \emph{lower values}
+    \item Right subtree gives \emph{higher values}
+  \end{itemize}
+\end{itemize}
+
+\vspace{10pt}
+\textbf{Insight:} Numbers arise from \emph{ordered asymmetry}, not branching.
+\end{frame}
+
+% ==================== FORMAL FRAMEWORK ====================
+\begin{frame}{Formal Framework}
+  \textbf{LCG Position:} Finite rooted DAG + terminal leaves + L/R edge labels + convergence property.
+
+  \vspace{12pt}
+  \textbf{Value Definition:}
   \[
   \Gv{v} = \bigl\{ \Gv{c} : c \in \mathcal{L}(v) \;\big|\; \Gv{c} : c \in \mathcal{R}(v) \bigr\}
   \]
-  with $\Gv{\tau} = 0$.
+  with $\Gv{\tau} = 0$ for terminals.
 \end{frame}
 
-\begin{frame}{Depth-1 Values}
-  \begin{table}
-    \centering
-    \small
-    \begin{tabular}{@{}llllc@{}}
-      \toprule
-      Left & Right & CGSuite & Value & Temp \\
-      \midrule
-      1 & 0 & \{0|\} & 1 & $-\infty$ \\
-      2 & 0 & \{\{0|\}|\} & 2 & $-\infty$ \\
-      0 & 1 & \{|0\} & $-1$ & $-\infty$ \\
-      1 & 1 & \{0|0\} & $*$ & 0 \\
-      1 & 2 & \{1|-1\} & $\pm 1$ & 1 \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
-\end{frame}
-
+% ==================== EXAMPLES ====================
 \begin{frame}{Example 1: Asymmetric Depth Tree}
   \centering
   \begin{tikzpicture}[gametree, scale=0.95]
@@ -193,26 +257,62 @@
     \draw[Le] (l)--(t); \draw[Le] (rm_l)--(t);
     \draw[Re] (rm_r)--(t);
   \end{tikzpicture}
-  \vspace{10pt}
-  Root value: $\{0 \mid *\} = \uparrow$
+  \vspace{8pt}
+  Value: $\{0 \mid *\} = \uparrow$
 \end{frame}
 
-\begin{frame}{Example 2: Multi-Sink DAG}
+\begin{frame}{Surprising Example: Value = $1/2$}
   \centering
-  \begin{tikzpicture}[gametree, scale=0.9]
-    \node[nd] (r) at (0,0) {};
-    \node[Lleaf] (l1) at (-1.5,-1.0) {};
-    \node[Lleaf] (l2) at (-0.5,-1.0) {};
-    \node[Rleaf] (r1) at (0.5,-1.0) {};
-    \node[term] (tl) at (-1.0,-2.2) {};
-    \node[term] (tr) at (0.8,-2.2) {};
-    \draw[Le] (r)--(l1); \draw[Le] (r)--(l2);
-    \draw[Re] (r)--(r1);
-    \draw[Le] (l1)--(tl); \draw[Le] (l2)--(tl);
-    \draw[Re] (r1)--(tr);
-  \end{tikzpicture}
-  \vspace{10pt}
-  Root value: $\{0 \mid 0\} = *$
+  \begin{tikzpicture}[gametree, scale=1.0]
+  % Root
+  \node[nd] (r) at (0,0) {};
+
+  % Children
+  \node[Lleaf] (l) at (-1.5,-1.2) {};
+  \node[nd] (r1) at (1.5,-1.2) {};
+
+  % Terminal
+  \node[term] (t) at (0,-2.6) {};
+
+  % Edges from root
+  \draw[Le] (r)--(l);
+  \draw[Re] (r)--(r1);
+
+  % Left child goes directly to terminal → value 0
+  \draw[Le] (l)--(t);
+
+  % Right child is a chain → value 1
+  \draw[Le] (r1)--(t);
+\end{tikzpicture}
+
+  \vspace{15pt}
+  \textbf{LCG can realise all dyadic rationals} through careful asymmetric branching, not obvious from the graph at first glance.
+\end{frame}
+
+\begin{frame}{Numbers in Leaf Convergence Games}
+\textbf{Theorem (Number Characterisation).}
+
+A position $v$ in an LCG is a \textbf{number} iff
+\[
+\max \mathcal{G}(\mathcal{L}(v)) \;<\; \min \mathcal{G}(\mathcal{R}(v)).
+\]
+
+\vspace{10pt}
+
+\textbf{Interpretation:}
+\begin{itemize}
+  \item Every Left option is strictly \emph{worse} than every Right option.
+  \item There is a \textbf{gap} between Left and Right outcomes.
+  \item The position equals the \textbf{simplest number in that gap}.
+\end{itemize}
+
+\vspace{10pt}
+
+\textbf{Consequences:}
+\begin{itemize}
+  \item Values are dyadic rationals ($\frac{m}{2^k}$).
+  \item No “first-player advantage” ambiguity.
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Computational Analysis}
@@ -229,28 +329,49 @@ def evaluate_lcg(nodes, edges, root, terminals):
   \end{lstlisting}
 \end{frame}
 
+
+% ==================== RELATION TO EXISTING WORK ====================
+\begin{frame}{Relation to Existing Frameworks}
+  \begin{itemize}
+    \item \textbf{Game Trees (standard CGT)} — LCG is a restricted, terminating subclass.
+    \item \textbf{Surreal Numbers} — LCG realises the same values without needing birthdays.
+    \item \textbf{Hackenbush} — Similar visual intuition, but on general graphs.
+    \item \textbf{Representation Theorem (informal):} Every short partizan game has an equivalent LCG.
+  \end{itemize}
+\end{frame}
+
+% ==================== KEY TAKEAWAYS ====================
 \begin{frame}{Key Takeaways}
   \begin{enumerate}
-    \item Termination is guaranteed by the convergence property.
-    \item Topology (linear / branched / multi-sink) shapes the value.
-    \item Depth-2 already gives infinitesimals and switches.
-    \item Symmetry always gives value $*$.
+    \item Graph topology.
+    \item Strong classification theorems link topology $\to$ value type.
+    \item Branching adds nuance. 
+    \item Rich values (integers, switches, infinitesimals, dyadics) appear naturally.
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{Open Questions}
+% ==================== OPEN QUESTIONS ====================
+\begin{frame}{Open Questions \& Future Work}
   \begin{enumerate}
-    \item Closed-form characterisation for arbitrary DAGs.
-    \item Complete enumeration of depth-3 values.
-    \item Efficient strategy computation for large positions.
+    \item Efficient canonical reduction algorithm for arbitrary LCG DAGs.
+    \item Complete enumeration and growth rate of values at depth $d$.
+    \item Algorithmic complexity of optimal play in LCG.
+    \item Generalisation to loopy or fuzzy variants.
   \end{enumerate}
+
+  \vspace{12pt}
+  \centering
+  \Large \textbf{LCG opens a graph-theoretic pathway into classical Combinatorial Game Theory.}
 \end{frame}
 
+% ==================== REFERENCES ====================
 \begin{frame}{References}
   \begin{thebibliography}{5}
     \bibitem{WW} Berlekamp, Conway, Guy, \textit{Winning Ways}.
     \bibitem{ONAG} Conway, \textit{On Numbers and Games}.
-    \bibitem{CGS} Siegel, CGSuite.
+    \bibitem{LiP} Albert et al., \textit{Lessons in Play}.
+    \bibitem{Siegel} Siegel, \textit{Combinatorial Game Theory}.
+    \bibitem{CGS} CGSuite.
   \end{thebibliography}
 \end{frame}
 
