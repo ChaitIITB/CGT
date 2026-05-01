@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.5)  1 MAY 2026 09:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.5)  1 MAY 2026 09:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**lcg_terminating_games.tex .
+**./lcg_terminating_games.tex
 (lcg_terminating_games.tex
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-08-13>
@@ -835,14 +835,23 @@ LaTeX Font Info:    Font shape `OT1/cmss/m/it' in size <5> not available
 ]
 
 
-Underfull \hbox (badness 3098) in paragraph at lines 286--287
+Overfull \hbox (82.08711pt too wide) in paragraph at lines 275--287
+ [][] 
+ []
+
+
+
+[2]
+Underfull \hbox (badness 3098) in paragraph at lines 346--347
 []\OT1/cmss/m/n/10 A. Siegel, ``CG-Suite,'' [][]$\OT1/cmtt/m/n/10 https : / / w
 ww . cgsuite . org$[][]\OT1/cmss/m/n/10 ,
  []
 
 
 
-[2] (lcg_terminating_games.aux)
+
+
+[3] (lcg_terminating_games.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-08-13>
@@ -851,26 +860,17 @@ L3 programming layer <2025-08-13>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `lcg_terminating_games.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `lcg_terminating_games.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
-(rerunfilecheck)             After:  E18150C1A12CF578AEC8CFC5CF3B8A57;1767.
+Package rerunfilecheck Info: File `lcg_terminating_games.out' has not changed.
+(rerunfilecheck)             Checksum: 153B7199EE826F18062E3AF2E2F627A9;2705.
  ) 
 Here is how much of TeX's memory you used:
- 23193 strings out of 468133
- 434122 string characters out of 5430713
- 843365 words of memory out of 5000000
- 51409 multiletter control sequences out of 15000+600000
+ 23221 strings out of 468133
+ 434368 string characters out of 5430713
+ 843510 words of memory out of 5000000
+ 51427 multiletter control sequences out of 15000+600000
  638861 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,9n,107p,624b,771s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,10n,107p,624b,771s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\chait\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss
 1000.pk><C:/Users/chait/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmex10.pfb><C:/Users/chait/AppData/Local/Programs/MiKTeX/fonts/type1/publ
@@ -893,10 +893,9 @@ ta/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Users/cha
 it/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/
 Users/chait/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt9.
 pfb>
-Output written on C:\Users\chait\OneDrive\文档\Acads\SEM_6\CGT\Project\lcg_te
-rminating_games.pdf (2 pages, 219697 bytes).
+Output written on lcg_terminating_games.pdf (3 pages, 238266 bytes).
 PDF statistics:
- 161 PDF objects out of 1000 (max. 8388607)
- 41 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 228 PDF objects out of 1000 (max. 8388607)
+ 51 named destinations out of 1000 (max. 500000)
+ 149 words of extra memory for PDF output out of 10000 (max. 10000000)
 

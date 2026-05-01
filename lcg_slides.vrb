@@ -1,0 +1,12 @@
+\frametitle{Computational Analysis}
+\textbf{Python evaluator:}
+  \begin{lstlisting}
+def evaluate_lcg(nodes, edges, root, terminals):
+    memo = {}
+    def eval_node(v):
+        if v in terminals: return ([], [])
+        left_opts = [eval_node(c) for s,c,col in edges if s==v and col=='L']
+        right_opts = [eval_node(c) for s,c,col in edges if s==v and col=='R']
+        return (left_opts, right_opts)
+    return eval_node(root)
+  \end{lstlisting}
